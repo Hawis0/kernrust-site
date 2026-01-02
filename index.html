@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <div class="bg-noise"></div>
 
@@ -45,10 +46,7 @@
             </p>
 
             <div class="hero-actions">
-              <a
-                class="btn primary"
-                href="steam://connect/151.240.121.101:29021"
-              >
+              <a class="btn primary" href="steam://connect/151.240.121.101:29021">
                 Connect now
               </a>
               <a
@@ -77,18 +75,24 @@
             </div>
           </div>
 
+          <!-- SERVER STATUS PANEL -->
           <div class="hero-panel">
             <div class="status-card">
               <div class="status-header">
                 <span class="status-dot online"></span>
                 <span class="status-text">Server status</span>
               </div>
+
               <div class="status-body">
-                <!-- Placeholder – kan kobles til API senere -->
-                <p class="status-main">Online</p>
+                <p class="status-main" id="server-online-text">Online</p>
                 <p class="status-sub">
-                  Players: <span>— / —</span><br />
-                  Last wipe: <span>Every Friday</span>
+                  Players:
+                  <span id="player-count">—</span> /
+                  <span id="player-max">—</span><br />
+                  Last wipe:
+                  <span>Every Friday 13:00 CET (BP + map)</span><br />
+                  Next wipe in:
+                  <span id="wipe-countdown">calculating…</span>
                 </p>
               </div>
             </div>
@@ -117,7 +121,7 @@
         </div>
       </section>
 
-      <!-- ABOUT / FEATURES -->
+      <!-- ABOUT -->
       <section id="about" class="section dark">
         <div class="container section-inner">
           <div class="section-header">
@@ -132,29 +136,25 @@
             <div class="feature-card">
               <h3>Vanilla+ balance</h3>
               <p>
-                Core Rust experience with light quality‑of‑life tweaks. No crazy
-                multipliers – just enough to keep the grind satisfying.
+                Core Rust experience with light quality‑of‑life tweaks.
               </p>
             </div>
             <div class="feature-card">
               <h3>Consistent wipes</h3>
               <p>
-                Predictable Friday wipes at 13:00 CET so you can plan your
-                wipes, wars and weekend sessions.
+                Predictable Friday wipes at 13:00 CET.
               </p>
             </div>
             <div class="feature-card">
               <h3>Serious players</h3>
               <p>
-                Kern Rust is aimed at players who care about teamplay, base
-                design and long fights – not 5‑minute servers.
+                Built for players who enjoy long fights and teamwork.
               </p>
             </div>
             <div class="feature-card">
               <h3>Active administration</h3>
               <p>
-                Hands‑on admins focused on stability, performance and fairness.
-                No random abuse, just clean enforcement.
+                Hands‑on admins focused on stability and fairness.
               </p>
             </div>
           </div>
@@ -176,18 +176,20 @@
                 <li><strong>Region:</strong> EU</li>
                 <li><strong>Type:</strong> Vanilla+</li>
                 <li><strong>Wipes:</strong> Fridays, 13:00 CET</li>
-                <li><strong>Blueprints:</strong> (Adjust text as needed)</li>
+                <li><strong>Blueprints:</strong> Wiped weekly</li>
               </ul>
             </div>
+
             <div class="info-card">
               <h3>Gameplay</h3>
               <ul>
-                <li><strong>Kits:</strong> None / minimal</li>
-                <li><strong>TP / Home:</strong> None (true Rust)</li>
-                <li><strong>Clans / Teams:</strong> (Adjust as needed)</li>
+                <li><strong>Kits:</strong> None</li>
+                <li><strong>TP / Home:</strong> None</li>
+                <li><strong>Clans / Teams:</strong> Vanilla teams</li>
                 <li><strong>Raid times:</strong> 24/7</li>
               </ul>
             </div>
+
             <div class="info-card">
               <h3>Technical</h3>
               <ul>
@@ -212,6 +214,7 @@
                 other Kern Rust players.
               </p>
             </div>
+
             <a
               class="btn primary"
               href="https://discord.gg/bhCYFCP5ze"
@@ -220,6 +223,7 @@
             >
               Join Kern Rust Discord
             </a>
+
             <p class="discord-tagline">
               Discord is required for reports, appeals and serious issues.
             </p>
@@ -227,8 +231,7 @@
 
           <div class="discord-embed-placeholder">
             <p>
-              Discord embed can be placed here using the official widget once
-              you’re ready.
+              Discord embed can be placed here using the official widget.
             </p>
           </div>
         </div>
@@ -239,10 +242,7 @@
         <div class="container section-inner">
           <div class="section-header">
             <h2>Support the server</h2>
-            <p>
-              Voting helps new players discover Kern Rust. It takes seconds and
-              makes a real difference.
-            </p>
+            <p>Voting helps new players discover Kern Rust.</p>
           </div>
 
           <div class="vote-grid">
@@ -251,6 +251,7 @@
               <p>Add your first Rust server list link here.</p>
               <a class="btn ghost small" href="#" target="_blank">Vote</a>
             </div>
+
             <div class="vote-card">
               <h3>Vote link #2</h3>
               <p>Add another relevant listing here.</p>
@@ -264,54 +265,61 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <span>&copy; <span id="year"></span> Kern Rust. All rights reserved.</span>
-        <span class="footer-note">Unofficial Rust server. Not affiliated with Facepunch Studios.</span>
+        <span class="footer-note">
+          Unofficial Rust server. Not affiliated with Facepunch Studios.
+        </span>
       </div>
     </footer>
 
+    <!-- JAVASCRIPT -->
     <script>
+      // Footer year
       document.getElementById("year").textContent =
         new Date().getFullYear().toString();
+
+      // Wipe countdown – full BP + map hver fredag kl. 13:00 CET
+      function getNextWipeDate() {
+        const now = new Date();
+        const next = new Date(now);
+
+        const currentDay = now.getDay(); // 5 = fredag
+        let daysToFriday = 5 - currentDay;
+        if (daysToFriday < 0) daysToFriday += 7;
+
+        next.setDate(now.getDate() + daysToFriday);
+        next.setHours(13, 0, 0, 0);
+
+        if (next <= now) next.setDate(next.getDate() + 7);
+
+        return next;
+      }
+
+      const wipeTarget = getNextWipeDate();
+
+      function updateWipeCountdown() {
+        const now = new Date();
+        const diff = wipeTarget - now;
+
+        if (diff <= 0) {
+          document.getElementById("wipe-countdown").textContent = "Wiping now";
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / (3600 * 24));
+        const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+        let text = "";
+        if (days > 0) text += days + "d ";
+        text += hours.toString().padStart(2, "0") + "h ";
+        text += minutes.toString().padStart(2, "0") + "m";
+
+        document.getElementById("wipe-countdown").textContent = text;
+      }
+
+      updateWipeCountdown();
+      setInterval(updateWipeCountdown, 60 * 1000);
     </script>
   </body>
 </html>
-<div class="discord-live-card">
-  <div class="discord-live-header">
-    <span class="status-dot online"></span>
-    <h3>Discord Status</h3>
-  </div>
-
-  <p class="discord-live-text">
-    Online members: <span id="discord-count">—</span><br />
-    Server: Kern Rust | EU | Solo/Duo/Squad
-  </p>
-
-  <a
-    class="btn ghost small"
-    href="https://discord.gg/gPDwezHW"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Join Discord
-  </a>
-</div>
-<div class="discord-live-card">
-  <div class="discord-live-header">
-    <span class="status-dot online"></span>
-    <h3>Discord Status</h3>
-  </div>
-
-  <p class="discord-live-text">
-    Online members: <span id="discord-count">—</span><br />
-    Server: Kern Rust | EU | Solo/Duo/Squad
-  </p>
-
-  <a
-    class="btn ghost small"
-    href="https://discord.gg/gPDwezHW"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Join Discord
-  </a>
-</div>
-
