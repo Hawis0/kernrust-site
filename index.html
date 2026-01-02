@@ -26,6 +26,8 @@
         <nav class="nav-links">
           <a href="#about">About</a>
           <a href="#info">Server Info</a>
+          <a href="#rules">Rules</a>
+          <a href="#donators">Donators</a>
           <a href="#discord">Discord</a>
           <a href="#vote">Vote</a>
         </nav>
@@ -177,6 +179,7 @@
                 <li><strong>Type:</strong> Vanilla+</li>
                 <li><strong>Wipes:</strong> Fridays, 13:00 CET</li>
                 <li><strong>Blueprints:</strong> Wiped weekly</li>
+                <li><strong>Raidable Bases:</strong> Custom handcrafted raidable bases</li>
               </ul>
             </div>
 
@@ -199,6 +202,79 @@
                 <li><strong>Low ping for EU players</strong></li>
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RULES -->
+      <section id="rules" class="section dark">
+        <div class="container section-inner">
+          <div class="section-header">
+            <h2>Server Rules</h2>
+            <p>These rules ensure a fair and clean Vanilla+ experience for everyone.</p>
+          </div>
+
+          <div class="rules-grid">
+            <div class="rule-card">
+              <h3>1. No cheating or scripting</h3>
+              <p>Any form of hacks, scripts, macros or third‑party advantages results in a permanent ban.</p>
+            </div>
+
+            <div class="rule-card">
+              <h3>2. No exploiting</h3>
+              <p>Abusing bugs, terrain glitches or unintended building spots is not allowed.</p>
+            </div>
+
+            <div class="rule-card">
+              <h3>3. No harassment or hate speech</h3>
+              <p>Trash talk is fine — targeted harassment, slurs, doxxing or threats are not.</p>
+            </div>
+
+            <div class="rule-card">
+              <h3>4. Reports & suspicious activity</h3>
+              <p>If you see anything suspicious or need to report a player, you must do it through our Discord.</p>
+            </div>
+
+            <div class="rule-card">
+              <h3>5. Respect the Vanilla+ experience</h3>
+              <p>No teaming beyond the vanilla team limit. No cross‑team alliances that break balance.</p>
+            </div>
+
+            <div class="rule-card">
+              <h3>6. Raiding rules</h3>
+              <p>24/7 raiding is allowed. No raid griefing unless you intend to take over the base.</p>
+            </div>
+
+            <div class="rule-card">
+              <h3>7. No advertising</h3>
+              <p>Do not promote other servers, Discords or communities.</p>
+            </div>
+
+            <div class="rule-card">
+              <h3>8. Common sense</h3>
+              <p>If you think “this is probably not allowed,” it probably isn’t.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DONATORS -->
+      <section id="donators" class="section">
+        <div class="container section-inner">
+          <div class="section-header">
+            <h2>Top Donators</h2>
+            <p>Thank you to everyone supporting Kern Rust.</p>
+          </div>
+
+          <div class="donator-box">
+            <ol class="donator-list">
+              <li>—</li>
+              <li>—</li>
+              <li>—</li>
+              <li>—</li>
+              <li>—</li>
+            </ol>
+            <p class="donator-note">For donation info, contact Hawis on Discord.</p>
           </div>
         </div>
       </section>
@@ -229,7 +305,6 @@
             </p>
           </div>
 
-          <!-- DISCORD WIDGET -->
           <iframe
             src="https://discord.com/widget?id=1287095134160420927&theme=dark"
             width="100%"
@@ -281,16 +356,14 @@
 
     <!-- JAVASCRIPT -->
     <script>
-      // Footer year
       document.getElementById("year").textContent =
         new Date().getFullYear().toString();
 
-      // Wipe countdown – full BP + map hver fredag kl. 13:00 CET
       function getNextWipeDate() {
         const now = new Date();
         const next = new Date(now);
 
-        const currentDay = now.getDay(); // 5 = fredag
+        const currentDay = now.getDay();
         let daysToFriday = 5 - currentDay;
         if (daysToFriday < 0) daysToFriday += 7;
 
@@ -329,10 +402,6 @@
       updateWipeCountdown();
       setInterval(updateWipeCountdown, 60 * 1000);
 
-      // -------------------------------
-      // LIVE PLAYER COUNT VIA BATTLEMETRICS
-      // -------------------------------
-
       async function updateRustPlayerCount() {
         const playerEl = document.getElementById("player-count");
         const maxEl = document.getElementById("player-max");
@@ -347,11 +416,9 @@
           const maxPlayers = data.maxPlayers;
           const status = data.status;
 
-          // Update UI
           playerEl.textContent = players;
           maxEl.textContent = maxPlayers;
 
-          // Update online/offline dot
           const dot = document.querySelector(".status-dot");
           const text = document.getElementById("server-online-text");
 
@@ -369,7 +436,6 @@
         }
       }
 
-      // Run immediately + every 60 sec
       updateRustPlayerCount();
       setInterval(updateRustPlayerCount, 60000);
     </script>
