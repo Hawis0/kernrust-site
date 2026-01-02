@@ -556,39 +556,3 @@ body {
     grid-template-columns: minmax(0, 1fr);
   }
 }
-.discord-live-card {
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-soft);
-  background: radial-gradient(circle at top left, #1a1515, #07080d);
-  padding: 14px 16px;
-  font-size: 13px;
-  color: var(--text-soft);
-  box-shadow: var(--shadow-subtle);
-}
-
-.discord-live-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.discord-live-header h3 {
-  margin: 0;
-  font-size: 15px;
-  color: var(--text);
-}
-
-.discord-live-text {
-  margin: 0 0 10px;
-  line-height: 1.4;
-}
-
-.status-dot.online {
-  background: #5af28c;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  box-shadow: 0 0 12px rgba(90, 242, 140, 0.9);
-}
-
